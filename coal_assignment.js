@@ -154,17 +154,7 @@ let op_split=Inst_op_split[1].split(",");//ARRAY TO STORE  OPERANDS
     //TAKING INPUT FROM USER
 
 
-// let array1=input.split(" ")//SPLITTONG ASSEMBLY CODE ON BASIS OF SPACES
-// let array2=array1[1].split(",");//SPLITTONG ASSEMBLY CODE ON BASIS OF COMMAS
 
-// //PUSHING VALUES IN INS_OP_SPLIT ARRAY
-// for (var i of array1) {
-//     Inst_op_split.push(i);
-// }
-// //PUSHING VALUES IN OP_SPLIT ARRAY
-// for (var i of array2) {
-//     op_split.push(i);
-// }
 
 switch(Inst_op_split[0]){
 
