@@ -1,4 +1,4 @@
-let machinecode="";//variable to store final opcode
+let machinecode="";//variable to store final opcode in binary language
 
 //DECLARED A DICTIONARY OF REGISTERS CONTENTS
 let Registers={
@@ -609,7 +609,6 @@ switch(Inst_op_split[0]){
                 }
             
             }
-
 
         }
        
