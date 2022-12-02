@@ -818,6 +818,7 @@ switch(Inst_op_split[0]){
             machinecode=machinecode.concat(Opcodes_Instructions.INC);
             
             if(is_Register(op_split[0])){
+                console.log("BEFORE VALUE OF MEMORY:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(word);
             //machinecode=machinecode.concat(" 11 ");
             machinecode=machinecode.concat(" ");
@@ -826,12 +827,14 @@ switch(Inst_op_split[0]){
             machinecode=machinecode.concat(reg_code[op_split[0]]);
             machinecode=machinecode.concat(" ");
             var Z=Hex_Addition(Registers[op_split[0]],1)
-            console.log("VALUE OF Z:",Z);
+            
             set_Register(op_split[0],Z);
         console.log("NEW VALUE OF REG:",Registers[op_split[0]]);
 
             console.log(machinecode);
-            machinecode=" ";}
+            machinecode=" ";
+        break;}
+
             else if(is_Memory(op_split[0])){
                 console.log("BEFORE VALUE OF MEMORY:",Memory[op_split[0]]);
                 //machinecode=machinecode.concat(word);
@@ -888,8 +891,10 @@ switch(Inst_op_split[0]){
                 console.log("NEW VALUE OF MEM:",Memory[op_split[0]]);
                 console.log(machinecode);
                 machinecode=" ";
+                break;
 
             }
+
             else if(!is_Memory(op_split[0]) && op_split[0].startsWith("[")){
                 machinecode=machinecode.concat(reg_code[op_split[0]]);
                     let B=op_split[0].substring(1,3);
@@ -912,28 +917,124 @@ switch(Inst_op_split[0]){
                     break;
 
                 }
-            
 
-        // case "DEC":
-        //     machinecode=machinecode.concat(Opcodes_Instructions.DEC);
-        //     machinecode=machinecode.concat(word);
-        //     if(is_Register(op_split[0])){//if register is destination
-        //         console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
-              
-        //     console.log(machinecode);
-        //     machinecode=" ";
-        // }
+    case "DEC":
+        machinecode=machinecode.concat(Opcodes_Instructions.INC);
+            
+        if(is_Register(op_split[0])){
+            console.log("BEFORE VALUE OF MEMORY:",Registers[op_split[0]]);
+            machinecode=machinecode.concat(word);
+        //machinecode=machinecode.concat(" 11 ");
+        machinecode=machinecode.concat(" ");
+        machinecode=machinecode.concat("000");
         
+        machinecode=machinecode.concat(reg_code[op_split[0]]);
+        machinecode=machinecode.concat(" ");
+        var Z=Hex_Subtraction(Registers[op_split[0]],1)
+        
+        set_Register(op_split[0],Z);
+    console.log("NEW VALUE OF REG:",Registers[op_split[0]]);
+
+        console.log(machinecode);
+        machinecode=" ";
+    break;}
+
+        else if(is_Memory(op_split[0])){
+            console.log("BEFORE VALUE OF MEMORY:",Memory[op_split[0]]);
+            //machinecode=machinecode.concat(word);
+            //machinecode=machinecode.concat(" 00 ");
+            machinecode=machinecode.concat(" ");
+            machinecode=machinecode.concat("000");
+            machinecode=machinecode.concat("110");
+
+            let hex=op_split[0].substring(1,5);
+                console.log(hex);
+                
+                let a = [];
+                for ( const s2 of hex) {
+                a.push(s2);
+                }
+                console.log(a);
+                let num_1=a[0];
+                console.log(num_1);
+                let num_2=a[1];
+                console.log(num_2);
+                let num_3=a[2];
+                console.log(num_3);
+                let num_4=a[3];
+                console.log(num_4);
+                num_1=parseInt(num_1,16).toString(2);
+                num_1=num_1.padStart(4,'0');
+                console.log(num_1);
+
+                num_2=parseInt(num_2,16).toString(2);
+                num_2=num_2.padStart(4,'0');
+                console.log(num_2);
+
+                num_3=parseInt(num_3,16).toString(2);
+                num_3=num_3.padStart(4,'0');
+                console.log(num_3);
+
+                num_4=parseInt(num_4,16).toString(2);
+                num_4=num_4.padStart(4,'0');
+                console.log(num_4);
+                machinecode=machinecode.concat(" ");
+                machinecode=machinecode.concat(num_3);
+
+                machinecode=machinecode.concat(" ");
+                machinecode=machinecode.concat(num_4);
+                machinecode=machinecode.concat(" ");
+                machinecode=machinecode.concat(num_1);
+                machinecode=machinecode.concat(" ");
+                machinecode=machinecode.concat(num_2);
+                var Z=Hex_Subtraction(Memory[op_split[0]],1)
+                console.log("VALUE OF Z:",Z);
+                console.log(op_split[0]);
+                console.log(Z)
+            set_Memory(op_split[0],Z);
+            console.log("NEW VALUE OF MEM:",Memory[op_split[0]]);
+            console.log(machinecode);
+            machinecode=" ";
+            break;
 
         }
-       
-    }
+
+        else if(!is_Memory(op_split[0]) && op_split[0].startsWith("[")){
+            machinecode=machinecode.concat(reg_code[op_split[0]]);
+                let B=op_split[0].substring(1,3);
+                let C=Registers[B];
+               
+                C=C.padStart(5,'[');
+                C=C.padEnd(6,']');
+                console.log("BEFORE VALUE OF MEMORY:",Memory[C]);
+                console.log("VALUE OD C IS:",C);
+                if(is_Memory(C)){
+                    machinecode=machinecode.concat(" ");
+                var Z=Hex_Subtraction(Memory[C],1)
+                console.log("VALUE OF Z:",Z);
+
+            }
+               set_Memory(C,Z);
+            console.log("NEW VALUE OF MEM:",Memory[C]);
+            console.log(machinecode);
+            machinecode=" ";
+                break;
+
+            }
+
+
+            }
+    
+
+         
         
+        
+
+       
+}
 function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTRUCTION FUNCTION
     var x=document.getElementById("id1").value;
     instruction(x);
     
     
   }
-
-
