@@ -2229,13 +2229,8 @@ switch(Inst_op_split[0]){
 
             }
         }
-    
-
-         
+ 
         
-        
-
-       
 }
 function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTRUCTION FUNCTION
     var x=document.getElementById("id1").value;
