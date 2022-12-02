@@ -1,4 +1,4 @@
-let machinecode="";//variable to store final opcode
+let machinecode="";//variable to store final opcode in binary language
 
 //DECLARED A DICTIONARY OF REGISTERS CONTENTS
 let Registers={
@@ -219,7 +219,8 @@ switch(Inst_op_split[0]){
     case "MOV":
         machinecode=machinecode.concat(Opcodes_Instructions.MOV);
             
-            if(is_Register(op_split[0])){//if register is destination
+            if(is_Register(op_split[0]))
+            {//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
                 machinecode=machinecode.concat(word);
@@ -322,7 +323,9 @@ switch(Inst_op_split[0]){
                 }
                 
             }
-            else {
+
+            else 
+            {
                 machinecode=machinecode.concat(" 0");//if memory is destination
                 if(is_Memory(op_split[0])){//MEMORY DIRECT 
                    console.log("BEFORE VALUE OF MEMORY:",Memory[op_split[0]]);
@@ -378,7 +381,7 @@ switch(Inst_op_split[0]){
                 console.log(machinecode);
                 machinecode=" ";
                 break;
-            }
+                }
 
                 else if(!is_Memory(op_split[0]) && op_split[0].startsWith("[")){//MEMORY INDIRECT
                    
@@ -405,8 +408,8 @@ switch(Inst_op_split[0]){
                 }
             
             }
-            case "ADD":
-                machinecode=machinecode.concat(Opcodes_Instructions.ADD);
+        case "ADD":
+            machinecode=machinecode.concat(Opcodes_Instructions.ADD);
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
@@ -908,7 +911,7 @@ switch(Inst_op_split[0]){
                     break;
 
                 }
-            }
+            
 
         // case "DEC":
         //     machinecode=machinecode.concat(Opcodes_Instructions.DEC);
@@ -921,8 +924,10 @@ switch(Inst_op_split[0]){
         // }
         
 
+        }
        
-}
+    }
+        
 function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTRUCTION FUNCTION
     var x=document.getElementById("id1").value;
     instruction(x);
