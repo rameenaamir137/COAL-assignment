@@ -299,7 +299,7 @@ switch(Inst_op_split[0]){
                 }
                 
             
-                else if((!is_Memory(op_split[1])) && op_split[1].startsWith("[") ){//indirect adressing
+                else if(!is_Memory(op_split[1]) && op_split[1].startsWith("[") ){//indirect adressing
                     // console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                     machinecode=machinecode.concat(" 00 ");
                    machinecode=machinecode.concat(reg_code[op_split[0]]);
