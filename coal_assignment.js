@@ -5,7 +5,7 @@ let Registers={
     AX:"0001",
     AL:"00",
     AH:"00",
-    BX:"0001",
+    BX:"0009",
     BL:"99",
     BH:"12",
     CX:"0000",
@@ -13,11 +13,12 @@ let Registers={
     CH:"00",
     DX:"0000",
     DL:"00",
-    DS:"00",
+    DH:"00",
     SI:"0000",
-    DI:"0000",
-    BP:"0000",
-    SP:"0000"};
+    DI:"0008",
+    IP:"0000" ,
+    BP:"0000" ,
+};
 
 //DECLARED A DICTIONARY OF OPCODES OF INSTRUCTIONS
 let Opcodes_Instructions={
@@ -69,7 +70,7 @@ let Memory={
     "[0008]":"0000",
     "[0009]":"0000",
     "[000A]":"0000",
-    "[000B]":"0000",
+    "[000B]":"ABCD",
     "[000C]":"0000",
     "[000D]":"0000",
     "[000E]":"0000",
@@ -86,7 +87,7 @@ function is_Register(reg_value){
 
     for(var key in Registers ){
 
-        if(reg_value.toUpperCase()==key 
+        if(reg_value.toUpperCase()==key
         || reg_value.toUpperCase()=="AL"
         || reg_value.toUpperCase()=="BL"
         || reg_value.toUpperCase()=="CL"
@@ -2229,15 +2230,34 @@ switch(Inst_op_split[0]){
 
             }
         }
- 
+    
+
+         
         
+        
+
+       
 }
 function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTRUCTION FUNCTION
     var x=document.getElementById("id1").value;
     instruction(x);
-document.getElementById("machine_code").innerHTML=machinecode;
+    document.getElementById("machine_code").innerHTML=machinecode;
 machinecode=" ";
-    
-  }
 
+for(let k in Memory){
+    console.log(k);
+    console.log(Memory[k]);
+    let a=k.toString()
+    document.getElementById(a).innerHTML=Memory[k]+"h";
+}
+ for(let k in Registers){
+     if(k=="AX" || k=="BX" || k=="CX" || k=="DX" ||  k=="AX" ){
+     console.log(k);
+     console.log(Registers[k]);
+     let a=k.toString()
+     console.log(a);
+document.getElementById(a).innerHTML=Registers[k];
+     }
+ }
 
+}
