@@ -20,17 +20,21 @@
     <br>
 
     <label for="ASMCODE" style="color:white; justify-content: center;font-size: medium;">Write your asm code here: </label>
-    <input type="text" id="footer-field" name="ASMCODE">
-    <button class="BUTTON1" style="justify-content: center;">GO!</button>
+    <input id="id1" type="text"  name="ASMCODE">
+    <button class="BUTTON1" style="justify-content: center;" onclick="myFunction()">GO!</button>
     <br><br>
     <div style="display: flex; margin:10px;justify-content: left;">
         <h2 class="naming" style="color:gray; font-style: italic;">MACHINE CODE:</h2>
         <table style="margin:10px;">
         <tr>
-            <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 500px; text-align: center;font-size:20px">
-            000110 0 0 11 010 001 1000 0000 0100 0011
+            <td id="machine_code" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 500px; text-align: center;font-size:20px">
+           
             </td>
-
+            <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
         </tr>
         </table>
     </div>
@@ -46,8 +50,12 @@
         <h2 class="naming" style="color:white; font-style: italic;">AX:</h2>
         <table style="margin:10px;">
         <tr>
-            <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-            
+            <td id="AX" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+            <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
         </tr>
         </table>
     </div>
@@ -56,8 +64,12 @@
         <h2 class="naming" style="color:white; font-style: italic;">BX:</h2>
         <table style="margin:10px;">
         <tr>
-            <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-            
+            <td id="BX" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+            <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
         </tr>
         </table>
     </div>
@@ -66,8 +78,12 @@
     <h2 class="naming" style="color:white; font-style: italic;">CX:</h2>
     <table style="margin:10px;">
     <tr>
-        <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-        
+        <td id="CX" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+        <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
     </tr>
     </table>
     </div>
@@ -76,8 +92,12 @@
     <h2 class="naming" style="color:white; font-style: italic;">DX:</h2>
     <table style="margin:10px;">
     <tr>
-        <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-        
+        <td id="DX" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+        <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
     </tr>
     </table>
     </div>
@@ -91,8 +111,12 @@
     <h2 class="naming" style="color:white; font-style: italic;">SI:</h2>
     <table style="margin:10px;">
     <tr>
-        <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-        
+        <td id="SI" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+        <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
     </tr>
     </table>
     </div>
@@ -101,8 +125,12 @@
     <h2 class="naming" style="color:white; font-style: italic;">DI:</h2>
     <table style="margin:10px;">
     <tr>
-        <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-        
+        <td id="DI" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+        <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
     </tr>
     </table>
     </div>
@@ -111,8 +139,12 @@
     <h2 class="naming" style="color:white; font-style: italic;">IP:</h2>
     <table style="margin:10px;">
     <tr>
-        <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-        
+        <td id="IP" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+        <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+        <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
     </tr>
     </table>
     </div>
@@ -121,8 +153,12 @@
         <h2 class="naming" style="color:white; font-style: italic;">BP:</h2>
         <table style="margin:10px;">
         <tr>
-            <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000</td>
-        
+            <td id="BP" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;font-size:20px">0000h</td>
+            <!--<td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">0</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">00</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>
+            <td style="background-color: gray; border: 2px solid #061731; color: #061731;">000</td>-->
         </tr>
         </table>
         </div>
@@ -134,37 +170,37 @@
             <h2 style = "color:gray;font-style: italic;">MEMORY LOCATIONS:</h2>
             <table style="margin:10px;">
                 <tr><td style="color:white">00000h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0000]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00001h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0001]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00002h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0002]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00003h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0003]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00004h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0004]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00005h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0005]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00006h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0006]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00007h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0007]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00008h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0008]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">00009h:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[0009]"style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">0000Ah:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[000A]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">0000Bh:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[000B]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">0000Ch:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[000C]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">0000Dh:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[000D]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">0000Eh:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[000E]" style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
                 <tr><td style="color:white">0000Fh:</td>
-                    <td style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000</td></tr>
+                    <td id="[000F]"style="background-color: gray; border: 2px solid #061731; color: #061731; width: 100px; text-align: center;">0000h</td></tr>
             
             </table>
             </div>
@@ -174,6 +210,7 @@
               
         
 
+<script src="coal_assignment.js"></script>
 
 </body>
 </html>
