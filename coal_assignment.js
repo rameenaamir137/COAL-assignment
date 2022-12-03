@@ -2255,7 +2255,6 @@ function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTR
     document.getElementById("machine_code").innerHTML=machinecode;
 machinecode=" ";
 
-
 for(let k in Memory){
     console.log(k);
     console.log(Memory[k]);
@@ -2271,5 +2270,6 @@ for(let k in Memory){
 document.getElementById(a).innerHTML=Registers[k];
      }
  }
+
 
 }
