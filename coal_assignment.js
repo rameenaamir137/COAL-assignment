@@ -11,11 +11,11 @@ let Registers={
     CX:"0000",
     CL:"00",
     CH:"00",
-    DX:"0000",
+    DX:"000B",
     DL:"00",
     DH:"00",
     SI:"0000",
-    DI:"0008",
+    DI:"0000",
     IP:"0000" ,
     BP:"0000" ,
 };
@@ -34,6 +34,7 @@ let Opcodes_Instructions={
     XOR:"000110",
     NOP:"100100 00",
     CMP:"001110",
+    XCHG: "100001 1"
 }
 
 //DECLARED A DICTIONARY OF REGISTERS_CODES
@@ -60,27 +61,27 @@ let reg_code={
 let Memory={
     
     "[0000]":"0001",
-    "[0001]":"0001",
+    "[0001]":"0008",
     "[0002]":"0000",
-    "[0003]":"0000",
+    "[0003]":"0020",
     "[0004]":"000A",
-    "[0005]":"0000",
+    "[0005]":"0003",
     "[0006]":"0000",
-    "[0007]":"0000",
-    "[0008]":"0000",
+    "[0007]":"000D",
+    "[0008]":"0007",
     "[0009]":"0000",
     "[000A]":"0000",
-    "[000B]":"ABCD",
-    "[000C]":"0000",
-    "[000D]":"0000",
-    "[000E]":"0000",
+    "[000B]":"00C1",
+    "[000C]":"0002",
+    "[000D]":"0009",
+    "[000E]":"000F",
     "[000F]":"0000",
 
 }
 
-/*for (var key in Memory) {
+for (var key in Memory) {
     console.log(key, Memory[key]);
-  }*/
+  }
 
 //FUNCTION TO CHECK IF VALID REGISTER
 function is_Register(reg_value){
@@ -101,8 +102,9 @@ function is_Register(reg_value){
            return true;
         }
 
-    }
-    return false;
+    
+}
+
 }
 
 
@@ -115,7 +117,8 @@ function is_Memory(mem_val){
         }
 
     }
-    return false;
+
+
 }
 
 //FUNCTION TO CHECK IF VALID INSTRUCTION
@@ -124,42 +127,84 @@ function is_Instruction(Inst_op_split){
         if(Inst_op_split[0]==key){
            return true;
         }
-
     }
-    return false;
+   
 
 }
-//FUNCTION TO CHANGE REG VALUES
+//function 2 to check valid instruction
+function valid_Instruction(){
+    if(is_Instruction(Inst_op_split)!=true){
+document.getElementById("error").innerHTML="NOT A VALID INSTRUCTION!"
+}
+}
+//function called to check valid instruction
+valid_Instruction();
 function set_Register( destination_register,source){
-    if(is_Register(source)){
-    Registers[destination_register]=Registers[source];
-    console.log(destination_register);
+if(is_Register(source)){
+Registers[destination_register]=Registers[source];
+console.log(destination_register);
+document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+}
+else if(is_Memory(source) ){
+Registers[destination_register]=Memory[source];
+document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+}
+else{
+    Registers[destination_register]=source;
     document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
-    }
-    else if(is_Memory(source) ){
-    Registers[destination_register]=Memory[source];
-    document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
-    }
-    else{
-        Registers[destination_register]=source;
-        document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
-    }
+}
 
 }
 
-//FUNCTION TO CHANGE MEM VALUES
 function set_Memory(destination_memory,source){
+if(is_Register(source)){
+Memory[destination_memory]=Registers[source];
+document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";}
+else{
+    Memory[destination_memory]=source;
+     document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";
+}
+
+
+}
+// function to exchange contents
+function XCHG1(destination_register, source){
     if(is_Register(source)){
+        temp=  Registers[destination_register];
+        Registers[destination_register]=Registers[source];
+        Registers[source]=temp;
+        console.log(destination_register);
+        document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+        }
+        else if(is_Memory(source) ){
+        temp= Registers[destination_register]
+        Registers[destination_register]=Memory[source];
+        Memory[source]=temp;
+        document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+        }
+        else{
+            temp= Registers[destination_register];  
+            Registers[destination_register]=source;
+            source=temp;
+            document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+        }
+}
+
+function XCHG2(destination_memory,source){
+    if(is_Register(source)){
+    temp=  Memory[destination_memory];
     Memory[destination_memory]=Registers[source];
+    Registers[source] = temp;
     document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";}
     else{
+        temp=  Memory[destination_memory];
         Memory[destination_memory]=source;
+        source = temp;
         document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";
     }
 
 
 }
-
 
 function Hex_Addition(op1,op2){
     var hexStr = (parseInt(op1, 16) + parseInt(op2, 16)).toString(16);
@@ -191,8 +236,7 @@ function Hex_Comparison(op1,op2){
 
 function hex2bin(hex)
 {
-    let bin = (parseInt(hex, 16).toString(2)).padStart(8, '0');
-    return bin;
+    return (parseInt(hex, 16).toString(2)).padStart(8, '0');
 }
 
 function bin2hex(bin)
@@ -296,7 +340,8 @@ function HEX_OR(c1, c2)
         return binStr;
       }
 
-      function HEX_NEG(c1){ 
+      function HEX_NEG(c1)
+  { 
       let a=HEX_NOT(c1);
       let b=hex2bin(a);
       let c=BIN_ADDITION(b,"1");
@@ -304,72 +349,70 @@ function HEX_OR(c1, c2)
       return d;
   }
 
-      //     console.log(HEX_NEG("00A0"));
+ console.log(HEX_NEG("00A0"));
 
 function instruction(input){
-    //console.log(input);
+    
+    console.log(input);
 
-let Inst_op_split=[]; //ARRAY TO STORE INSTRUCTION AND OPERANDS(mov  ,  ab,bx  )
+let Inst_op_split=[];//ARRAY TO STORE INSTRUCTION AND OPERANDS
     let arr=input.split(" ");
-    //console.log(arr[0]);
-    //console.log(arr[1]);
+    console.log(arr[0]);
+    console.log(arr[1]);
     arr.forEach(element => {
         Inst_op_split.push(element.toUpperCase());
         
       });
 
-//console.log(Inst_op_split);
-
-//CASE FOR INSTRUCTION:"NOP"
 if(Inst_op_split[0] == "NOP")
 {    
-    machinecode=machinecode.concat(Opcodes_Instructions.NOP);
-    console.log(machinecode);
+machinecode=machinecode.concat(Opcodes_Instructions.NOP);
+console.log(machinecode);
 }
 else{
-let op_split=Inst_op_split[1].split(",");//ARRAY TO STORE  OPERANDS(ax   ,    bx)
-//for(element  of op_split){
+let op_split=Inst_op_split[1].split(",");//ARRAY TO STORE  OPERANDS
 
-    //console.log(element);
-//}
-//CHANGING WORD BIT
+for(element  of op_split){
+
+    console.log(element);
+}
+
 
 var word;
-if(op_split[0]== "AX" || op_split[0]== "BX" ||op_split[0]== "CX" || op_split[0]== "DX")
-    {word=1;}
+//CHANGING WORD BIT
+if(op_split[0]== "AX" || op_split[0]== "BX" ||op_split[0]== "CX" || op_split[0]== "DX"){
+    word=1;
 
+}
 else if(op_split[0]== "AL" || op_split[0]== "BL" ||op_split[0]== "CL" || op_split[0]== "DL"  || op_split[0]=="AH"
 ||op_split[0]=="BH"
 || op_split[0]=="CH"
-|| op_split[0]=="DH")
-    {word=0;}
-
-if(op_split[1]== "AX" || op_split[1]== "BX" ||op_split[1]== "CX" || op_split[1]== "DX")
-    {word=1;}
-
+|| op_split[0]=="DH"){
+    word=0;
+}
+if(op_split[1]== "AX" || op_split[1]== "BX" ||op_split[1]== "CX" || op_split[1]== "DX"){
+    word=1;
+}
 else if(op_split[1]== "AL" || op_split[1]== "BL" ||op_split[1]== "CL" || op_split[1]== "DL"  || op_split[0]=="AH"
 ||op_split[1]=="BH"
 || op_split[1]=="CH"
-|| op_split[1]=="DH")
-    {word=0;}
+|| op_split[1]=="DH"){
+    word=0;
+}
 
-
-//SWITCH STATEMENT TO COMAPRE 0 POSITION OF ARRAY WITH INSYTUCTIONS
 switch(Inst_op_split[0]){
 
 
     case "MOV":
         machinecode=machinecode.concat(Opcodes_Instructions.MOV);
-            //DESTINATION:RESGISTER
-
+        
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
                 machinecode=machinecode.concat(word);
                
-                //SOURCE:REGISTER (REG->REG)
                 if(is_Register(op_split[1])){//reg direct addressing
-                    
+                    console.log("true");
                     machinecode=machinecode.concat(" 11 ");
                   
                     machinecode=machinecode.concat(reg_code[op_split[0]]);
@@ -382,7 +425,7 @@ switch(Inst_op_split[0]){
                 
                     break;
                 }
-                //SOURCE: MEMORY LOCATION (MEM->REG)
+        
                 else if(is_Memory(op_split[1])){//direct addressing
                     console.log(Memory[op_split[1]])
                     console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
@@ -440,7 +483,7 @@ switch(Inst_op_split[0]){
 
                 }
                 
-                //SOURCE: MEMORY LOCATION IN REGISTER(INDIRECT MEM-> REG)
+            
                 else if(!is_Memory(op_split[1]) && op_split[1].startsWith("[") ){//indirect adressing
                     // console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                     machinecode=machinecode.concat(" 00 ");
@@ -466,12 +509,8 @@ switch(Inst_op_split[0]){
                 }
                 
             }
-
-            //DESTINATION: MEMORY
             else {
                 machinecode=machinecode.concat(" 0");//if memory is destination
-
-                //SOURCE: REGISTER(REG->MEM)
                 if(is_Memory(op_split[0])){//MEMORY DIRECT 
                    console.log("BEFORE VALUE OF MEMORY:",Memory[op_split[0]]);
                 machinecode=machinecode.concat(word);
@@ -527,7 +566,7 @@ switch(Inst_op_split[0]){
                 // machinecode=" ";
                 break;
             }
-                //SOURCE:MEMORY LOCATION IN REGISTER(INDIRECT MEM-> MEM)
+
                 else if(!is_Memory(op_split[0]) && op_split[0].startsWith("[")){//MEMORY INDIRECT
                    
                     machinecode=machinecode.concat(word);
@@ -556,8 +595,6 @@ switch(Inst_op_split[0]){
            
      case "ADD":
                 machinecode=machinecode.concat(Opcodes_Instructions.ADD);
-
-                //DESTINATION:RESGISTER
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
@@ -761,8 +798,6 @@ switch(Inst_op_split[0]){
 
     case "SUB":
             machinecode=machinecode.concat(Opcodes_Instructions.SUB);
-
-            //DESTINATION:RESGISTER
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
@@ -2237,10 +2272,203 @@ switch(Inst_op_split[0]){
                 
                 }
         
-            
+                case "XCHG": // EXCHANGE
+                machinecode=machinecode.concat(Opcodes_Instructions.XCHG);
+                    //DESTINATION:RESGISTER
+        
+                    if(is_Register(op_split[0])){//if register is destination
+                        console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
+                        machinecode=machinecode.concat(word);
+                       
+                        //SOURCE:REGISTER (REG->REG)
+                        if(is_Register(op_split[1])){//reg direct addressing
+                            
+                            machinecode=machinecode.concat(" 11 ");
+                          
+                            machinecode=machinecode.concat(reg_code[op_split[0]]);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(reg_code[op_split[1]]);
+                            XCHG1(op_split[0],op_split[1]);
+                        console.log("NEW VALUE OF REG:",Registers[op_split[0]]);
+                        console.log(machinecode);
+                        // machinecode=" ";
+                        
+                            break;
+                        }
+                        //SOURCE: MEMORY LOCATION (MEM->REG)
+                        else if(is_Memory(op_split[1])){//direct addressing
+                            console.log(Memory[op_split[1]])
+                            console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
+                            machinecode=machinecode.concat(" 00 ");
+                            machinecode=machinecode.concat(reg_code[op_split[0]]);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat("110");
+                            console.log(op_split[1]);
+                            let hex=op_split[1].substring(1,5);
+                            console.log(hex);
+                            
+                            let a = [];
+                            for ( const s2 of hex) {
+                            a.push(s2);
+                            }
+                            console.log(a);
+                            let num_1=a[0];
+                            console.log(num_1);
+                            let num_2=a[1];
+                            console.log(num_2);
+                            let num_3=a[2];
+                            console.log(num_3);
+                            let num_4=a[3];
+                            console.log(num_4);
+                            num_1=parseInt(num_1,16).toString(2);
+                            num_1=num_1.padStart(4,'0');
+                            console.log(num_1);
+        
+                            num_2=parseInt(num_2,16).toString(2);
+                            num_2=num_2.padStart(4,'0');
+                            console.log(num_2);
+        
+                            num_3=parseInt(num_3,16).toString(2);
+                            num_3=num_3.padStart(4,'0');
+                            console.log(num_3);
+        
+                            num_4=parseInt(num_4,16).toString(2);
+                            num_4=num_4.padStart(4,'0');
+                            console.log(num_4);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_3);
+        
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_4);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_1);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_2);
+                           
+                           XCHG1(op_split[0],op_split[1]);
+                            console.log("NEW VALUE OF REG:",Registers[op_split[0]]);
+                            console.log(machinecode);
+                            // machinecode=" ";
+                        break;
+        
+                        }
+                        
+                        //SOURCE: MEMORY LOCATION IN REGISTER(INDIRECT MEM-> REG)
+                        else if(!is_Memory(op_split[1]) && op_split[1].startsWith("[") ){//indirect adressing
+                            // console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
+                            machinecode=machinecode.concat(" 00 ");
+                           machinecode=machinecode.concat(reg_code[op_split[0]]);
+                            let B=op_split[1].substring(1,3);
+                            console.log(B);
+                            
+                            let C=Registers[B];
+                            console.log(C);
+                            C=C.padStart(5,'[');
+                            C=C.padEnd(6,']');
+                            console.log(C);
+                            if(is_Memory(C)){
+                                console.log(typeof(C));
+                                machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(reg_code[B]);}
+                           XCHG1(op_split[0],C);
+                            console.log("NEW VALUE OF REG:",Registers[op_split[0]]);
+                            console.log(machinecode);
+                            // machinecode=" ";
+                            break;
+        
+                        }
+                        
+                    }
+        
+                    //DESTINATION: MEMORY
+                    else {
+                    
+                        //SOURCE: REGISTER(REG->MEM)
+                        if(is_Memory(op_split[0])){//MEMORY DIRECT 
+                           console.log("BEFORE VALUE OF MEMORY:",Memory[op_split[0]]);
+                        machinecode=machinecode.concat(word);
+                        machinecode=machinecode.concat(" 00 ");
+                        machinecode=machinecode.concat(reg_code[op_split[1]]);
+                        machinecode=machinecode.concat(" ");
+                        machinecode=machinecode.concat("110");
+        
+                        let hex=op_split[0].substring(1,5);
+                            console.log(hex);
+                            
+                            let a = [];
+                            for ( const s2 of hex) {
+                            a.push(s2);
+                            }
+                            console.log(a);
+                            let num_1=a[0];
+                            console.log(num_1);
+                            let num_2=a[1];
+                            console.log(num_2);
+                            let num_3=a[2];
+                            console.log(num_3);
+                            let num_4=a[3];
+                            console.log(num_4);
+                            num_1=parseInt(num_1,16).toString(2);
+                            num_1=num_1.padStart(4,'0');
+                            console.log(num_1);
+        
+                            num_2=parseInt(num_2,16).toString(2);
+                            num_2=num_2.padStart(4,'0');
+                            console.log(num_2);
+        
+                            num_3=parseInt(num_3,16).toString(2);
+                            num_3=num_3.padStart(4,'0');
+                            console.log(num_3);
+        
+                            num_4=parseInt(num_4,16).toString(2);
+                            num_4=num_4.padStart(4,'0');
+                            console.log(num_4);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_3);
+        
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_4);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_1);
+                            machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(num_2);
+        
+                        XCHG2(op_split[0],op_split[1]);
+                        console.log("NEW VALUE OF MEM:",Memory[op_split[0]]);
+                        console.log(machinecode);
+                        // machinecode=" ";
+                        break;
+                    }
+                        //SOURCE:MEMORY LOCATION IN REGISTER(INDIRECT MEM-> MEM)
+                        else if(!is_Memory(op_split[0]) && op_split[0].startsWith("[")){//MEMORY INDIRECT
+                           
+                            machinecode=machinecode.concat(word);
+                            machinecode=machinecode.concat(" 00 ");
+                            machinecode=machinecode.concat(reg_code[op_split[1]]);
+                            let B=op_split[0].substring(1,3);
+                            let C=Registers[B];
+                           
+                            C=C.padStart(5,'[');
+                            C=C.padEnd(6,']');
+                            console.log("BEFORE VALUE OF MEMORY:",Memory[C]);
+                            console.log("VALUE OD C IS:",C);
+                            if(is_Memory(C)){
+                                machinecode=machinecode.concat(" ");
+                            machinecode=machinecode.concat(reg_code[B]);}
+        
+                          XCHG2(C,op_split[1]);
+                        console.log("NEW VALUE OF MEM:",Memory[C]);
+                        console.log(machinecode);
+                        // machinecode=" ";
+                            break;
+        
+                        }
+                    
+                    }
 
             }
-        }
+        
+    }}
     
 
          
@@ -2248,27 +2476,28 @@ switch(Inst_op_split[0]){
         
 
        
-}
+
 function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTRUCTION FUNCTION
+    for(let k in Memory){
+        console.log(k);
+        console.log(Memory[k]);
+        let a=k.toString()
+        document.getElementById(a).innerHTML=Memory[k]+"h";
+    }
+     for(let k in Registers){
+         if(k=="AX" || k=="BX" || k=="CX" || k=="DX" ||  k=="AX" ){
+         console.log(k);
+         console.log(Registers[k]);
+         let a=k.toString()
+         console.log(a);
+    document.getElementById(a).innerHTML=Registers[k];
+         }
+     }
+    
     var x=document.getElementById("id1").value;
     instruction(x);
-    document.getElementById("machine_code").innerHTML=machinecode;
+    document.getElementById("machine_code").innerHTML=machinecode+"h";
 machinecode=" ";
 
-for(let k in Memory){
-    console.log(k);
-    console.log(Memory[k]);
-    let a=k.toString()
-    document.getElementById(a).innerHTML=Memory[k]+"h";
-}
- for(let k in Registers){
-     if(k=="AX" || k=="BX" || k=="CX" || k=="DX" ||  k=="AX" ){
-     console.log(k);
-     console.log(Registers[k]);
-     let a=k.toString()
-     console.log(a);
-document.getElementById(a).innerHTML=Registers[k];
-     }
- }
 
 }
