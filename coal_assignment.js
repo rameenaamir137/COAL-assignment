@@ -11,11 +11,11 @@ let Registers={
     CX:"0000",
     CL:"00",
     CH:"00",
-    DX:"000B",
+    DX:"0000",
     DL:"00",
     DH:"00",
     SI:"0000",
-    DI:"0000",
+    DI:"0008",
     IP:"0000" ,
     BP:"0000" ,
 };
@@ -60,27 +60,27 @@ let reg_code={
 let Memory={
     
     "[0000]":"0001",
-    "[0001]":"0008",
+    "[0001]":"0001",
     "[0002]":"0000",
-    "[0003]":"0020",
+    "[0003]":"0000",
     "[0004]":"000A",
-    "[0005]":"0003",
+    "[0005]":"0000",
     "[0006]":"0000",
-    "[0007]":"000D",
-    "[0008]":"0007",
+    "[0007]":"0000",
+    "[0008]":"0000",
     "[0009]":"0000",
     "[000A]":"0000",
-    "[000B]":"00C1",
-    "[000C]":"0002",
-    "[000D]":"0009",
-    "[000E]":"000F",
+    "[000B]":"ABCD",
+    "[000C]":"0000",
+    "[000D]":"0000",
+    "[000E]":"0000",
     "[000F]":"0000",
 
 }
 
-for (var key in Memory) {
+/*for (var key in Memory) {
     console.log(key, Memory[key]);
-  }
+  }*/
 
 //FUNCTION TO CHECK IF VALID REGISTER
 function is_Register(reg_value){
@@ -101,12 +101,8 @@ function is_Register(reg_value){
            return true;
         }
 
-    
-    else{
-    return false;
-
     }
-}
+    return false;
 }
 
 
@@ -118,13 +114,8 @@ function is_Memory(mem_val){
            return true;
         }
 
-    else{
-        return false;
-
     }
-    }
-
-
+    return false;
 }
 
 //FUNCTION TO CHECK IF VALID INSTRUCTION
@@ -138,31 +129,33 @@ function is_Instruction(Inst_op_split){
     return false;
 
 }
+//FUNCTION TO CHANGE REG VALUES
 function set_Register( destination_register,source){
-if(is_Register(source)){
-Registers[destination_register]=Registers[source];
-console.log(destination_register);
-document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
-}
-else if(is_Memory(source) ){
-Registers[destination_register]=Memory[source];
-document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
-}
-else{
-    Registers[destination_register]=source;
+    if(is_Register(source)){
+    Registers[destination_register]=Registers[source];
+    console.log(destination_register);
     document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
-}
+    }
+    else if(is_Memory(source) ){
+    Registers[destination_register]=Memory[source];
+    document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+    }
+    else{
+        Registers[destination_register]=source;
+        document.getElementById(destination_register).innerHTML=Registers[destination_register]+"h";
+    }
 
 }
 
+//FUNCTION TO CHANGE MEM VALUES
 function set_Memory(destination_memory,source){
-if(is_Register(source)){
-Memory[destination_memory]=Registers[source];
-document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";}
-else{
-    Memory[destination_memory]=source;
-     document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";
-}
+    if(is_Register(source)){
+    Memory[destination_memory]=Registers[source];
+    document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";}
+    else{
+        Memory[destination_memory]=source;
+        document.getElementById(destination_memory).innerHTML=Memory[destination_memory]+"h";
+    }
 
 
 }
@@ -198,7 +191,8 @@ function Hex_Comparison(op1,op2){
 
 function hex2bin(hex)
 {
-    return (parseInt(hex, 16).toString(2)).padStart(8, '0');
+    let bin = (parseInt(hex, 16).toString(2)).padStart(8, '0');
+    return bin;
 }
 
 function bin2hex(bin)
@@ -302,8 +296,7 @@ function HEX_OR(c1, c2)
         return binStr;
       }
 
-      function HEX_NEG(c1)
-  { 
+      function HEX_NEG(c1){ 
       let a=HEX_NOT(c1);
       let b=hex2bin(a);
       let c=BIN_ADDITION(b,"1");
@@ -311,167 +304,70 @@ function HEX_OR(c1, c2)
       return d;
   }
 
- console.log(HEX_NEG("00A0"));
+      //     console.log(HEX_NEG("00A0"));
 
 function instruction(input){
-    
-    console.log(input);
+    //console.log(input);
 
-let Inst_op_split=[];//ARRAY TO STORE INSTRUCTION AND OPERANDS
+let Inst_op_split=[]; //ARRAY TO STORE INSTRUCTION AND OPERANDS(mov  ,  ab,bx  )
     let arr=input.split(" ");
-    console.log(arr[0]);
-    console.log(arr[1]);
+    //console.log(arr[0]);
+    //console.log(arr[1]);
     arr.forEach(element => {
         Inst_op_split.push(element.toUpperCase());
         
       });
-//function 1 to check valid instruction
-function is_Instruction(){
-for(var key in Opcodes_Instructions){
-    if(Inst_op_split[0]== key){
-        return true;
-    }
-}
-}
-//function 2 to check valid instruction
-function valid_Instruction(){
-    if(is_Instruction()!=true){
-alert("NOT A VALID INSTRUCTION");
-}
-}
-//function called to check valid instruction
-valid_Instruction();
+
+//console.log(Inst_op_split);
+
+//CASE FOR INSTRUCTION:"NOP"
 if(Inst_op_split[0] == "NOP")
 {    
-machinecode=machinecode.concat(Opcodes_Instructions.NOP);
-console.log(machinecode);
+    machinecode=machinecode.concat(Opcodes_Instructions.NOP);
+    console.log(machinecode);
 }
 else{
-let op_split=Inst_op_split[1].split(",");//ARRAY TO STORE  OPERANDS
+let op_split=Inst_op_split[1].split(",");//ARRAY TO STORE  OPERANDS(ax   ,    bx)
+//for(element  of op_split){
 
-for(element  of op_split){
-
-    console.log(element);
-}
-//function 1 to check valid operand 2
-function check_op1(op_split){
-   for(var key in Registers){
-       if(op_split[0]===key){
-        console.log("register loop:true")
-           return true;
-           
-
-       }
-   }
-   for(var key in Memory){
-    if(op_split[0]===key){
-        console.log("memory loop:true")
-        return true;
-    }
-   }
-   console.log("false")}
-//function 2 to check valid operand 2
-function valid_op1(){
-if(check_op1(op_split)!=true){
-    alert("NOT VALID OPERAND1,NEITHER REGISTER NOR MEMORY!")
-}};
-//function called to check valid operand 2
-valid_op1();
-//function to check valid operand 2
-function check_op2(op_split){
-    for(var key in Registers){
-        if(op_split[1]===key){
-         console.log("register loop:true")
-            return true;
-            
- 
-        }
-    }
-    for(var key in Memory){
-     if(op_split[1]===key){
-         console.log("memory loop:true")
-         return true;
-     }
-    }
-    return false;
-    }
- //function to check valid operand 2
- function valid_op2(){
- if(check_op2(op_split)!=true){
-     alert("NOT VALID OPERAND2,NEITHER REGISTER NOR MEMORY!")
- }};
- //function called to check valid operand 2
- valid_op2();
+    //console.log(element);
+//}
+//CHANGING WORD BIT
 
 var word;
-//CHANGING WORD BIT
-if(op_split[0]== "AX" || op_split[0]== "BX" ||op_split[0]== "CX" || op_split[0]== "DX"){
-    word=1;
+if(op_split[0]== "AX" || op_split[0]== "BX" ||op_split[0]== "CX" || op_split[0]== "DX")
+    {word=1;}
 
-}
 else if(op_split[0]== "AL" || op_split[0]== "BL" ||op_split[0]== "CL" || op_split[0]== "DL"  || op_split[0]=="AH"
 ||op_split[0]=="BH"
 || op_split[0]=="CH"
-|| op_split[0]=="DH"){
-    word=0;
-}
-if(op_split[1]== "AX" || op_split[1]== "BX" ||op_split[1]== "CX" || op_split[1]== "DX"){
-    word=1;
-}
+|| op_split[0]=="DH")
+    {word=0;}
+
+if(op_split[1]== "AX" || op_split[1]== "BX" ||op_split[1]== "CX" || op_split[1]== "DX")
+    {word=1;}
+
 else if(op_split[1]== "AL" || op_split[1]== "BL" ||op_split[1]== "CL" || op_split[1]== "DL"  || op_split[0]=="AH"
 ||op_split[1]=="BH"
 || op_split[1]=="CH"
-|| op_split[1]=="DH"){
-    word=0;
-}
-//function to check size mitchmatch
-function valid_size_reg(op_split){
-    if(check_op1(op_split) && check_op2(op_split)){
-    if(word==1){
-        
-        if(op_split[0]=="AX" || op_split[0]=="BX" || op_split[0]=="CX" || op_split[0]=="DX" &&
-        op_split[1]=="AX" || op_split[1]=="BX" || op_split[1]=="CX" || op_split[1]=="DX"
-        ){console.log("1")
-            return true;
-        }
-    }
-    else if(word ==0){
-        
-            if(op_split[0]=="AL" || op_split[0]=="BL" || op_split[0]=="CL" || op_split[0]=="DL" 
-            || op_split[0]=="AH" || op_split[0]=="BH" || op_split[0]=="CH" || op_split[0]=="DH" &&
-            op_split[1]=="AL" || op_split[1]=="BL" || op_split[1]=="CL" || op_split[1]=="DL"
-            || op_split[0]=="AH" || op_split[0]=="BH" || op_split[0]=="CH" || op_split[0]=="DH"
-            ){console.log("2")
-                return true;
-            }
+|| op_split[1]=="DH")
+    {word=0;}
 
-    }
-    else{console.log("3")
-    return false;}
-}
-else{console.log("4")
-return false;}
-    
-}
-//function 2 to check size mitchmatch
-function check_sizemismatch(){
-    if (valid_size_reg(op_split)!= true){
-alert("THE TWO REGISTERS HAVE SIZE MISMATCH !")
-    }
-}
-//function called to check size mitchmatch
-check_sizemismatch();
+
+//SWITCH STATEMENT TO COMAPRE 0 POSITION OF ARRAY WITH INSYTUCTIONS
 switch(Inst_op_split[0]){
 
 
     case "MOV":
         machinecode=machinecode.concat(Opcodes_Instructions.MOV);
-        
+            //DESTINATION:RESGISTER
+
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
                 machinecode=machinecode.concat(word);
                
+                //SOURCE:REGISTER (REG->REG)
                 if(is_Register(op_split[1])){//reg direct addressing
                     
                     machinecode=machinecode.concat(" 11 ");
@@ -486,7 +382,7 @@ switch(Inst_op_split[0]){
                 
                     break;
                 }
-        
+                //SOURCE: MEMORY LOCATION (MEM->REG)
                 else if(is_Memory(op_split[1])){//direct addressing
                     console.log(Memory[op_split[1]])
                     console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
@@ -544,7 +440,7 @@ switch(Inst_op_split[0]){
 
                 }
                 
-            
+                //SOURCE: MEMORY LOCATION IN REGISTER(INDIRECT MEM-> REG)
                 else if(!is_Memory(op_split[1]) && op_split[1].startsWith("[") ){//indirect adressing
                     // console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                     machinecode=machinecode.concat(" 00 ");
@@ -570,8 +466,12 @@ switch(Inst_op_split[0]){
                 }
                 
             }
+
+            //DESTINATION: MEMORY
             else {
                 machinecode=machinecode.concat(" 0");//if memory is destination
+
+                //SOURCE: REGISTER(REG->MEM)
                 if(is_Memory(op_split[0])){//MEMORY DIRECT 
                    console.log("BEFORE VALUE OF MEMORY:",Memory[op_split[0]]);
                 machinecode=machinecode.concat(word);
@@ -627,7 +527,7 @@ switch(Inst_op_split[0]){
                 // machinecode=" ";
                 break;
             }
-
+                //SOURCE:MEMORY LOCATION IN REGISTER(INDIRECT MEM-> MEM)
                 else if(!is_Memory(op_split[0]) && op_split[0].startsWith("[")){//MEMORY INDIRECT
                    
                     machinecode=machinecode.concat(word);
@@ -656,6 +556,8 @@ switch(Inst_op_split[0]){
            
      case "ADD":
                 machinecode=machinecode.concat(Opcodes_Instructions.ADD);
+
+                //DESTINATION:RESGISTER
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
@@ -859,6 +761,8 @@ switch(Inst_op_split[0]){
 
     case "SUB":
             machinecode=machinecode.concat(Opcodes_Instructions.SUB);
+
+            //DESTINATION:RESGISTER
             if(is_Register(op_split[0])){//if register is destination
                 console.log("BEFORE VALUE OF REG:",Registers[op_split[0]]);
                 machinecode=machinecode.concat(" 1");//DIRECTION BIT 
@@ -2337,7 +2241,6 @@ switch(Inst_op_split[0]){
 
             }
         }
-    }
     
 
          
@@ -2345,7 +2248,7 @@ switch(Inst_op_split[0]){
         
 
        
-
+}
 function myFunction() {//FUNCTION TO LINK TEXT BOX OF ASSEMBLY LANGUAGE YO INSTRUCTION FUNCTION
     var x=document.getElementById("id1").value;
     instruction(x);
@@ -2367,5 +2270,6 @@ for(let k in Memory){
 document.getElementById(a).innerHTML=Registers[k];
      }
  }
+
 
 }
